@@ -50,11 +50,6 @@
         left: 0;
     } 
 
-
-    .flw_icon a i {
-        transform: rotate(0deg);
-    }
-
     .banner_content .Cnt_img {
         width: auto;
     }
@@ -62,14 +57,9 @@
     .about-image-wrapper {
         width: auto;
     }
-
-    .EImg01 {
-        right: 423px;
-        top: 343px;
-    }
-
+    
     .banner_content .Cnt_info {
-        width: 58%;
+        width: 100%; /* Change to 100% for better stacking on tablets */
         position: relative;
         margin-top: 60px;
     }
@@ -128,11 +118,6 @@
         height: 300px;
     }
 
-    #home .Cnt_img {
-        /* Adjust height for the Plexus canvas container on smaller screens */
-        height: 200px;
-    }
-
     /* Adjust height for the Plexus canvas container on smaller screens */
     #home .Cnt_img {
         height: 350px;
@@ -170,11 +155,6 @@
         bottom: 25%;
         left: -40px;
     }
-    .EImg01 {
-        right: 387px;
-        top: 361px;
-    }
-
     .banner_content .Cnt_info {
         width: 100%;
         position: relative;
@@ -182,18 +162,17 @@
     }
 
     /* Reposition decorative icons for mobile layout */
-    .Ecnt01 {
+    .Ecnt01, .Ecnt02 {
         top: -60px; /* Move it up */
-        left: 0; /* Position it to the left */
-        right: auto; /* Unset any inherited right value */
         z-index: 10; /* Bring it to the front to make it clickable */
     }
-
-    /* Reposition decorative icons for mobile layout */
+    .Ecnt01 {
+        left: 15px;
+        right: auto;
+    }
     .Ecnt02 {
-        top: -60px; /* Move it up */
-        left: auto; /* Unset the desktop 'left' value */
-        right: 0; /* Position it to the right */
+        right: 15px;
+        left: auto;
     }
 
     .headTitle,
@@ -311,11 +290,6 @@
         max-width: 540px !important;
     }
 
-    .EImg01 {
-        right: 313px;
-        top: 319px;
-    }
-
     .banner_content .Cnt_img .banner_img {
         width: 250px;
         height: 250px;
@@ -389,15 +363,6 @@
     .banner_content .Cnt_img .banner_img {
         width: 220px;
         height: 220px;
-    }
-
-    .banner_content .Cnt_img .banner_img img {
-        top: -22px;
-    }
-
-    .EImg01 {
-        right: 15rem;
-        top: 249px;
     }
 
     .banner_content .Cnt_info .title_inner h2 {
@@ -535,15 +500,11 @@
         gap: 15px;
     }
 
-    /* Responsive adjustments for mobile devices */
-    /* For the home section, reverse the order to show the image/canvas first */
+    /* Stack all banner content sections vertically on mobile */
     #home .banner_content {
         flex-direction: column-reverse;
-        gap: 40px;
     }
-
-    /* For all other sections, stack them in their default source order */
-    .banner_content:not(#home .banner_content) {
+    .banner_content {
         flex-direction: column;
         gap: 40px; /* Add some space between stacked items */
     }
@@ -565,7 +526,7 @@
     }
 
     /* Hide some decorative elements on mobile to reduce clutter */
-    .serimg02, .simg1, .simg2, .fimg, .fimg2 {
+    .serimg02, .simg1, .simg2, .fimg, .fimg2, .EImg01 {
         display: none;
     }
 }
@@ -580,5 +541,6 @@
     /* Adjust contact section to a single-column, centered layout */
     .subr .banner_content {
         grid-template-columns: 1fr;
+        padding: 40px 25px;
     }
 }

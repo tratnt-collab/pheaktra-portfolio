@@ -501,12 +501,13 @@ nav .logo a img {
 }
 
 .banner_content .Cnt_info {
-    width: 58%; /* This will be overridden on smaller screens */
+    width: 50%; /* Use 50% to prevent overflow */
     position: relative;
 }
 
 .banner_content .Cnt_img {
-    width: 58%;
+    width: 50%; /* Use 50% to prevent overflow */
+    padding-left: 30px; /* Add some space between the two columns */
 }
 
 .banner_content .Cnt_info .title_inner h2 {
