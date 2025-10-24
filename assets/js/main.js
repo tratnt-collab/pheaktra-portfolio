@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         projectsData.forEach(project => {
             const projectCard = `
-                <a href="project-detail.html?id=${project.id}" class="project-card">
+                <a href="/project-detail.html?id=${project.id}" class="project-card">
                     <img src="${project.imageUrls[0]}" alt="${project.title}">
                     <div class="project-card-info">
                         <h3>${project.title}</h3>

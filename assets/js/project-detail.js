@@ -11,19 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // or adjust paths to existing images. The folder name has been corrected to 'assets'.
     const techLogoMap = {
 
-        'VBA': 'assets/img/xlsms.png',
-        'Microsoft Excel': 'assets/img/xlsxs.png',
-        'Adobe Photoshop': 'assets/img/adobe-pss.png',
-        'Adobe Illustrator': 'assets/img/adobe-ais.png',
-        'Telegram API': 'assets/img/telegrams.png',
-        'HTML': 'assets/img/html5.png',
-        'CSS': 'assets/img/css3.png',
-        'JavaScript': 'assets/img/javascript.png',
-        'Python': 'assets/img/Python.png',
-        'Tailwind CSS': 'assets/img/tailwind-css.png',
+        'VBA': '/assets/img/xlsms.png',
+        'Microsoft Excel': '/assets/img/xlsxs.png',
+        'Adobe Photoshop': '/assets/img/adobe-pss.png',
+        'Adobe Illustrator': '/assets/img/adobe-ais.png',
+        'Telegram API': '/assets/img/telegrams.png',
+        'HTML': '/assets/img/html5.png',
+        'CSS': '/assets/img/css3.png',
+        'JavaScript': '/assets/img/javascript.png',
+        'Python': '/assets/img/Python.png',
+        'Tailwind CSS': '/assets/img/tailwind-css.png',
         // Add more mappings for other technologies as needed
     };
-    const defaultTechLogo = 'assets/img/tech-logos/default-tech.png'; // Fallback image
+    const defaultTechLogo = '/assets/img/tech-logos/default-tech.png'; // Fallback image
 
     // Find the project data that matches the ID
     // The 'projectsData' variable is available from the included 'projects.js' file
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Update Meta Tags for SEO and Social Sharing ---
         const pageUrl = new URL(window.location.href);
-        const absoluteImageUrl = `${pageUrl.origin}/${project.imageUrls[0]}`;
+        const absoluteImageUrl = `${pageUrl.origin}${project.imageUrls[0]}`.replace(/([^:]\/)\/+/g, "$1"); // Ensure no double slashes
 
         document.querySelector('meta[name="description"]').setAttribute('content', project.description);
         // Open Graph Tags
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 thumbItem.className = 'lightbox-thumbnail-item';
                 const isVideo = url.endsWith('.mp4');
                 const thumbEl = isVideo ? document.createElement('video') : document.createElement('img');
-                thumbEl.src = isVideo ? url + '#t=0.1' : url; // Get first frame for video
+                thumbEl.src = isVideo ? `${url}#t=0.1` : url; // Get first frame for video
                 if (isVideo) thumbEl.muted = true;
 
                 thumbItem.appendChild(thumbEl);
