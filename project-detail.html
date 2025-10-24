@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail</title>
+
+    <!-- SEO and Social Sharing Meta Tags (Placeholders) -->
+    <meta name="description" content="Details about a project by Pheaktra Kare.">
+    <meta name="author" content="Pheaktra Kare">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content=""> <!-- Will be set by JS -->
+    <meta property="og:title" content="Project Detail"> <!-- Will be set by JS -->
+    <meta property="og:description" content=""> <!-- Will be set by JS -->
+    <meta property="og:image" content=""> <!-- Will be set by JS -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="asstes/img/Icon-White.png">
+    <link rel="stylesheet" href="asstes/css/css.css">
+    <link rel="stylesheet" href="asstes/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+</head>
+
+<body>
+    <div id="star-background"></div>
+    <!--=============- header -==================-->
+    <header>
+        <div class="header sticky">
+            <div class="container">
+                <nav>
+                    <div class="logo">
+                        <a href="index.html#home">
+                            <img src="asstes/img/White-Icons.png" alt="">
+                        </a>
+                    </div>
+                    <div class="navbar">
+                        <ul>
+                            <li class="nav_item"><a href="index.html#home">Home</a></li>
+                            <li class="nav_item"><a href="index.html#about">About Me</a></li>
+                            <li class="nav_item"><a href="index.html#services">Services</a></li>
+                            <li class="nav_item"><a href="index.html#projects" class="active">My Projects</a></li>
+                            <li class="nav_item"><a href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn_area">
+                        <!-- This button is for desktop -->
+                        <a href="index.html#contact" class="btn">
+                            Contact Me
+                        </a>
+                        <!-- This button is for opening the mobile menu -->
+                        <button class="OC_btn">
+                            <i class="fi fi-rr-apps"></i>
+                        </button>
+                    </div>
+                </nav>
+                <!--======- header Mobile-========-->
+                <div class="mobile_menu">
+                    <nav class="mobile_nav">
+                        <button class="closebtn"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="mblogo">
+                            <a href="index.html#home">
+                                <h2>Pheaktra</h2>
+                            </a>
+                        </div>
+                        <div class="mobile_bar">
+                            <ul>
+                                <li class="Mbnav_item"><a href="index.html#home">Home</a></li>
+                                <li class="Mbnav_item"><a href="index.html#about">About Me</a></li>
+                                <li class="Mbnav_item"><a href="index.html#services">Services</a></li>
+                                <li class="Mbnav_item"><a href="index.html#projects" class="active">My Projects</a></li>
+                                <li class="Mbnav_item"><a href="index.html#contact">Contact</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="mobile_menu-backdrop"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="project-detail-section" class="Project">
+            <div class="container">
+                <!-- Back to Projects Button -->
+                <div class="back-to-projects-container">
+                    <a href="index.html#projects" class="btn back-button">Back</a>
+                </div>
+
+                <!-- Project details will be injected here by JavaScript -->
+                <!-- The floating logos container is now here, to sit behind the content -->
+                <div id="floating-tech-logos" class="floating-tech-logos-wrapper"></div>
+                <div id="project-detail-content-wrapper" class="project-detail-content" style="display: none;">
+                    <div class="project-client-logo">
+                        <img id="client-logo-image" src="" alt="Client Logo">
+                        <h4 id="client-name"></h4>
+                    </div>
+                    <div class="project-detail-info">
+                        <h3 id="project-title"></h3>
+                        <p id="project-description"></p>
+                        <h4>Key Details</h4>
+                        <ul id="project-details-list">
+                            <!-- Key details will be injected here -->
+                        </ul>
+
+                        <h4>Technologies Used</h4>
+                        <ul id="project-tech-list">
+                            <!-- Technologies will be injected here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- New Project Gallery Section -->
+                <div id="project-gallery-wrapper" class="project-gallery" style="display: none;">
+                    <h3>Project Gallery</h3>
+                    <div id="project-gallery-images" class="gallery-grid"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <a class="lightbox-prev">&#10094;</a>
+        <div class="lightbox-content" id="lightbox-content"></div>
+        <div id="lightbox-thumbnails" class="lightbox-thumbnails"></div>
+        <a class="lightbox-next">&#10095;</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="asstes/js/star-animation.js"></script>
+    <script src="asstes/js/projects.js"></script>
+    <script src="asstes/js/main.js"></script> <!-- Add main.js to handle mobile menu -->
+    <script src="asstes/js/project-detail.js"></script>
+</body>
+
+</html>
