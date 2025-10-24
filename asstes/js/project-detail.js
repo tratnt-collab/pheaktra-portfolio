@@ -8,22 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Technology Logo Mapping ---
     // IMPORTANT: You might need to create these image files in 'asstes/img/tech-logos/'
-    // or adjust paths to existing images.
+    // or adjust paths to existing images. The folder name has been corrected to 'assets'.
     const techLogoMap = {
 
-        'VBA': 'asstes/img/xlsms.png',
-        'Microsoft Excel': 'asstes/img/xlsxs.png',
-        'Adobe Photoshop': 'asstes/img/adobe-pss.png',
-        'Adobe Illustrator': 'asstes/img/adobe-ais.png',
-        'Telegram API': 'asstes/img/telegrams.png',
-        'HTML': 'asstes/img/html5.png',
-        'CSS': 'asstes/img/css3.png',
-        'JavaScript': 'asstes/img/javascript.png',
-        'Python': 'asstes/img/Python.png',
-        'Tailwind CSS': 'asstes/img/tailwind-css.png',
+        'VBA': 'assets/img/xlsms.png',
+        'Microsoft Excel': 'assets/img/xlsxs.png',
+        'Adobe Photoshop': 'assets/img/adobe-pss.png',
+        'Adobe Illustrator': 'assets/img/adobe-ais.png',
+        'Telegram API': 'assets/img/telegrams.png',
+        'HTML': 'assets/img/html5.png',
+        'CSS': 'assets/img/css3.png',
+        'JavaScript': 'assets/img/javascript.png',
+        'Python': 'assets/img/Python.png',
+        'Tailwind CSS': 'assets/img/tailwind-css.png',
         // Add more mappings for other technologies as needed
     };
-    const defaultTechLogo = 'asstes/img/tech-logos/default-tech.png'; // Fallback image
+    const defaultTechLogo = 'assets/img/tech-logos/default-tech.png'; // Fallback image
 
     // Find the project data that matches the ID
     // The 'projectsData' variable is available from the included 'projects.js' file

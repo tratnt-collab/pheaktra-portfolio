@@ -8,39 +8,9 @@ if (history.scrollRestoration) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if the page load was a reload action.
-    const navigationEntries = performance.getEntriesByType("navigation");
-    const isReload = navigationEntries.length > 0 && navigationEntries[0].type === 'reload';
-
-    if (isReload) {
-        // On reload, force a "hard refresh" by adding a unique query parameter.
-        // This prevents the browser from using cached versions of files.
-        const url = new URL(window.location.href);
-        if (!url.searchParams.has('t')) {
-            url.searchParams.set('t', new Date().getTime());
-            // Replace the current history entry and redirect to the new URL.
-            // This triggers the hard refresh.
-            window.location.replace(url.toString());
-        } else {
-            // If the cache-busting parameter is already present, just scroll to the top.
-            window.scrollTo(0, 0);
-        }
-    } else {
-        // On initial navigation, handle scrolling to hash or top of page.
-        const hash = window.location.hash;
-        if (hash) {
-            const targetElement = document.querySelector(hash);
-            if (targetElement) {
-                // Delay scrolling to allow the preloader to finish and layout to settle.
-                setTimeout(() => {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }, 1200); // A bit longer than the preloader timeout.
-            }
-        } else {
-            // If no hash, ensure the page is at the very top on load.
-            window.scrollTo(0, 0);
-        }
-    }
+    // On initial load, ensure the page is at the very top.
+    // The browser's default behavior will handle scrolling to a hash if present.
+    window.scrollTo(0, 0);
 
     if (preloaderEl) {
         function loadData() {
