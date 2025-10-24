@@ -50,6 +50,11 @@
         left: 0;
     } 
 
+    /* Reset icon rotation since the container is no longer rotated */
+    .flw_icon a i {
+        transform: rotate(0deg);
+    }
+
     .banner_content .Cnt_img {
         width: auto;
     }
@@ -542,5 +547,11 @@
     .subr .banner_content {
         grid-template-columns: 1fr;
         padding: 40px 25px;
+    }
+
+    /* Ensure contact form groups stack vertically on mobile */
+    .contact-form .form-group {
+        flex-direction: column;
+        gap: 20px; /* Maintain consistent gap when stacked */
     }
 }
