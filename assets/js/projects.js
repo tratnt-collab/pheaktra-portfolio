@@ -60,15 +60,15 @@ const projectsData = [
         category: 'Logo Redesign',
         client: {
             name: 'TopSruch FT',
-            logoUrl: '/assets/img/topsruchft/Topsroch-final-English-Yellow-1.png'
+            logoUrl: '/assets/img/Topsruchft/Topsroch-final-English-Yellow-1.png'
         },
         imageUrls: [
-            '/assets/img/topsruchft/Topsroch-final-English-Yellow-1.png',
-            '/assets/img/topsruchft/Topsroch-final-english.png',
-            '/assets/img/topsruchft/Topsroch-khmer.png',
-            '/assets/img/topsruchft/Topsroch-final-Khmer.png',
-            '/assets/img/topsruchft/Topsroch-Thumbnail.jpg',
-            '/assets/img/topsruchft/Topsruch-Logo-Intro.mp4',
+            '/assets/img/Topsruchft/Topsroch-final-English-Yellow-1.png',
+            '/assets/img/Topsruchft/Topsroch-final-english.png',
+            '/assets/img/Topsruchft/Topsroch-khmer.png',
+            '/assets/img/Topsruchft/Topsroch-final-Khmer.png',
+            '/assets/img/Topsruchft/Topsroch-Thumbnail.jpg',
+            '/assets/img/Topsruchft/Topsruch-Logo-Intro.mp4',
             
         ],
         description: 'TopSruch FT, a local football team in Siem Reap, Cambodia, needed a professional redesign of their self-made logo. The original was cluttered with too many elements and harsh colors. My goal was to create a powerful, modern mascot logo that was clean and respected their roots. I focused on the Hanuman\'s Head, a key element from their old emblem, and rebuilt the identity around it. By simplifying the composition and introducing a more sophisticated palette of saturated complementary colors, the new logo is both striking and meaningful.',
