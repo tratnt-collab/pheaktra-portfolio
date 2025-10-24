@@ -393,6 +393,14 @@
         width: 100%;
     }
 
+    /* Ensure contact section stacks vertically on the smallest screens */
+    .subr .banner_content {
+        grid-template-columns: 1fr;
+        align-items: start; /* Align items to the top for vertical stacking */
+        padding: 2.5rem 1.5625rem;
+    }
+
+
   /* Project Detail Page Responsive Adjustments for medium screens */
     .project-detail-content {
         gap: 3.75rem; /* Reduce gap for medium screens */

@@ -1,28 +1,19 @@
-
-//preloader//
-const preloaderEl = document.getElementById('preloader');
-
 // Force page to load at the top
 if (history.scrollRestoration) {
     history.scrollRestoration = 'manual';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // On initial load, ensure the page is at the very top.
-    // The browser's default behavior will handle scrolling to a hash if present.
     window.scrollTo(0, 0);
 
+    //========== Preloader Logic =========//
+    const preloaderEl = document.getElementById('preloader');
     if (preloaderEl) {
-        function loadData() {
-            return new Promise((resolve, reject) => {
-                setTimeout(resolve, 1000);
-            })
-        }
-
-        loadData().then(() => {
+        // Use a simple timeout to hide the preloader
+        setTimeout(() => {
             preloaderEl.classList.add('preloaderH');
             preloaderEl.classList.remove('visible');
-        });
+        }, 1000);
     }
 
     //========== Dynamic Project Card Generation =========/
@@ -33,10 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        projectGrid.innerHTML = ''; // Clear existing content
-
-        projectsData.forEach(project => {
-            const projectCard = `
+        // Build the HTML string in one go for better performance
+        const cardsHTML = projectsData.map(project => `
                 <a href="/project-detail.html?id=${project.id}" class="project-card">
                     <img src="${project.imageUrls[0]}" alt="${project.title}">
                     <div class="project-card-info">
@@ -44,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p>${project.category}</p>
                     </div>
                 </a>
-            `;
-            projectGrid.innerHTML += projectCard;
-        });
+            `).join('');
+
+        projectGrid.innerHTML = cardsHTML;
     }
     generateProjectCards();
 
@@ -179,6 +168,7 @@ if (plexusCanvas) {
     let particles = [];
     let animationFrameId;
     let particleCount;
+    let spatialGrid;
     let maxDistance;
 
     const mouse = {
@@ -186,20 +176,6 @@ if (plexusCanvas) {
         y: null,
         radius: 150
     };
-
-    // Throttling function to limit how often a function can be called.
-    function throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        }
-    }
 
     plexusCanvas.addEventListener('mousemove', throttle((event) => {
         const rect = plexusCanvas.getBoundingClientRect();
@@ -288,6 +264,48 @@ if (plexusCanvas) {
         }
     }
 
+    // Spatial Hash Grid for performance optimization
+    class SpatialGrid {
+        constructor(width, height, cellSize) {
+            this.width = width;
+            this.height = height;
+            this.cellSize = cellSize;
+            this.grid = new Map();
+        }
+
+        _getKey(x, y) {
+            return `${Math.floor(x / this.cellSize)},${Math.floor(y / this.cellSize)}`;
+        }
+
+        clear() {
+            this.grid.clear();
+        }
+
+        insert(particle) {
+            const key = this._getKey(particle.x, particle.y);
+            if (!this.grid.has(key)) {
+                this.grid.set(key, []);
+            }
+            this.grid.get(key).push(particle);
+        }
+
+        query(particle) {
+            const neighbors = [];
+            const pX = Math.floor(particle.x / this.cellSize);
+            const pY = Math.floor(particle.y / this.cellSize);
+
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const key = `${pX + i},${pY + j}`;
+                    if (this.grid.has(key)) {
+                        neighbors.push(...this.grid.get(key));
+                    }
+                }
+            }
+            return neighbors;
+        }
+    }
+
     function initParticles() {
         particles = [];
         const style = getComputedStyle(document.documentElement);
@@ -297,16 +315,18 @@ if (plexusCanvas) {
         // Set particle count and distance based on screen size
         if (window.innerWidth <= 768) { // Phone screen size
             particleCount = 20;
-            maxDistance = 90;
+            maxDistance = 80; // Slightly reduce distance on mobile
         } else { // Large screen size
             particleCount = 30;
             maxDistance = 120;
         }
 
+        const canvasWidth = plexusCanvas.width / (window.devicePixelRatio || 1);
+        const canvasHeight = plexusCanvas.height / (window.devicePixelRatio || 1);
+        spatialGrid = new SpatialGrid(canvasWidth, canvasHeight, maxDistance);
+
         for (let i = 0; i < particleCount; i++) {
             let size = Math.random() * 2 + 1;
-            const canvasWidth = plexusCanvas.width / (window.devicePixelRatio || 1);
-            const canvasHeight = plexusCanvas.height / (window.devicePixelRatio || 1);
 
             // Confine initial particle positions to the new taller/narrower area
             let x = (Math.random() * (canvasWidth * 0.8)) + (canvasWidth * 0.1);
@@ -319,23 +339,30 @@ if (plexusCanvas) {
     }
 
     function connect() {
-        for (let a = 0; a < particles.length; a++) {
-            for (let b = a; b < particles.length; b++) {
-                let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+        spatialGrid.clear();
+        particles.forEach(p => spatialGrid.insert(p));
+
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i < particles.length; i++) {
+            const particleA = particles[i];
+            const neighbors = spatialGrid.query(particleA);
+
+            for (let j = 0; j < neighbors.length; j++) {
+                const particleB = neighbors[j];
+                if (particleA === particleB) continue; // Don't connect a particle to itself
+
+                const dx = particleA.x - particleB.x;
+                const dy = particleA.y - particleB.y;
+                const distance = (dx * dx) + (dy * dy);
+
                 if (distance < (maxDistance * maxDistance)) {
                     const opacity = 1 - (distance / (maxDistance * maxDistance));
-                    
-                    // Create a gradient that transitions between the two particle colors
-                    const gradient = ctx.createLinearGradient(particles[a].x, particles[a].y, particles[b].x, particles[b].y);
-                    gradient.addColorStop(0, particles[a].color);
-                    gradient.addColorStop(1, particles[b].color);
-
-                    ctx.strokeStyle = gradient;
-                    ctx.lineWidth = 1;
-                    ctx.globalAlpha = opacity; // Apply distance-based opacity
+                    ctx.globalAlpha = opacity * particleA.opacity * particleB.opacity; // Factor in particle opacity
+                    ctx.strokeStyle = particleA.color; // Use a single color for performance
                     ctx.beginPath();
-                    ctx.moveTo(particles[a].x, particles[a].y);
-                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.moveTo(particleA.x, particleA.y);
+                    ctx.lineTo(particleB.x, particleB.y);
                     ctx.stroke();
                 }
             }
@@ -355,10 +382,32 @@ if (plexusCanvas) {
     animate();
 }
 if (typeof initParticles === 'function') {
-    reinitPlexusParticles = initParticles;
+    // Debounce resize event for performance
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (typeof resizeCanvas === 'function') {
+                resizeCanvas();
+            }
+        }, 250);
+    });
+    reinitPlexusParticles = initParticles; // Expose function for theme switcher
 }
 
-//======- Mobile Menu Toggle -=========/
+// Throttling function to limit how often a function can be called.
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+//========== Mobile Menu Toggle =========//
 const mobileMenu = document.querySelector('.mobile_menu');
 const openBtn = document.querySelector('.OC_btn');
 const closeBtn = document.querySelector('.closebtn');
@@ -376,7 +425,7 @@ if (mobileMenu && openBtn && closeBtn && mobileNavLinks.length > 0) {
     mobileNavLinks.forEach(link => link.addEventListener('click', closeMenu));
 }
 
-// -========Card animation Tilt ========-//
+//========== Card animation Tilt =========//
 const tiltBoxes = document.querySelectorAll(".box");
 if (tiltBoxes.length > 0) {
     VanillaTilt.init(tiltBoxes, {
@@ -385,11 +434,7 @@ if (tiltBoxes.length > 0) {
     });;
 }
 
-    //========== Split Screen Scrolling Logic =========/
-    const sections = document.querySelectorAll('main section');
-    const navLinks = document.querySelectorAll('.navbar a, .mobile_bar a');
-
-    //========== switcherArea & color =========/
+    //========== Theme Switcher Logic =========//
     const switcherButton = document.querySelector('.stBtn');
     const switcherArea = document.querySelector('.switcher');
 
@@ -397,7 +442,6 @@ if (tiltBoxes.length > 0) {
         // Ensure the switcher elements are on top of other content
         switcherButton.style.zIndex = '1001';
         switcherArea.style.zIndex = '1001';
-
 
         switcherButton.addEventListener('click', () => {
             switcherArea.classList.toggle('active');
@@ -413,7 +457,9 @@ if (tiltBoxes.length > 0) {
                 document.documentElement.style.setProperty('--Main01', main01[index]);
                 document.documentElement.style.setProperty('--Main02', main02[index]);
                 // Re-initialize the plexus particles with the new theme colors
-                reinitPlexusParticles();
+                if (typeof reinitPlexusParticles === 'function') {
+                    reinitPlexusParticles();
+                }
             }
         }
 
@@ -427,7 +473,6 @@ if (tiltBoxes.length > 0) {
             });
         });
     }
-
 
     //========== Project Stats Counter Animation =========/
     const statsSection = document.querySelector('.project-stats');
@@ -526,18 +571,16 @@ if (tiltBoxes.length > 0) {
                         finalEl.style.display = 'block'; // Make it take up space before fading in.
                         finalEl.classList.add('visible');
                     }, 600); // This duration MUST match the transition duration in css.css.
-
-                    // After showing the final headline, wait and then loop the animation
-                    setTimeout(() => {
-                        typeCode(typingEl, finalEl, text); // Restart the animation
-                    }, 4000); // 4-second pause before looping
-                }, 800); // 800ms delay
+                }, 800); // 800ms delay before fading out
             }
         }
 
         typeCharacter(); // Initial call to start typing
     }
 
+    //========== Active Nav Link on Scroll =========//
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('.navbar a, .mobile_bar a');
 
     function setActiveLink(index) {
         navLinks.forEach(link => link.classList.remove('active'));
@@ -546,14 +589,6 @@ if (tiltBoxes.length > 0) {
             activeLinks.forEach(link => link.classList.add('active'));
         }
     }
-
-    // Handle clicks on nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // The default anchor behavior will handle the scrolling.
-            // The scroll listener below will handle setting the active class.
-        });
-    });
 
     // Update active section on normal scroll
     window.addEventListener('scroll', () => {
@@ -567,7 +602,7 @@ if (tiltBoxes.length > 0) {
         setActiveLink(currentSectionIndex);
     });
 
-    //========== Parallax Effect on Background Elements =========/
+    //========== GSAP Scroll & Parallax Animations =========//
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     // Function to create and animate a trail particle
@@ -794,12 +829,10 @@ if (tiltBoxes.length > 0) {
     // Initialize the service title animation
     setupServiceTitleAnimation();
 
-    //========== Star Background Animation =========/
+    //========== Starfield Background Initialization =========//
     new Starfield('star-background');
-});
 
-//========== Contact Form to Telegram Submission =========/
-document.addEventListener('DOMContentLoaded', function() {
+    //========== Contact Form to Telegram Submission =========//
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -811,8 +844,8 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.innerHTML = 'Sending...';
 
             // Your Telegram Bot details
-            const botToken = '8328572536:AAEXNiYDB7KT_JK1WELxswiryAVbO7zrH1s';
-            const chatId = '-4933723764';
+            const botToken = '8328572536:AAEXNiYDB7KT_JK1WELxswiryAVbO7zrH1s'; // Consider moving to a config file or environment variable
+            const chatId = '-4933723764'; // Consider moving to a config file
 
             // Get form data
             const formData = new FormData(contactForm);
@@ -854,10 +887,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
 
-//========== About Icon Image Swapping Logic =========/
-document.addEventListener('DOMContentLoaded', function () {
+    //========== About Icon Image Swapping Logic =========//
     const aboutIcons = gsap.utils.toArray('.about-image-wrapper .banner_img span[class^="Abimg"]');
     let isSwapping = false;
 
@@ -917,30 +948,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
         scheduleNextSwap(); // Start the first swap
     }
-});
-
-//========== About Me Text Switching Animation =========/
-document.addEventListener('DOMContentLoaded', function () {
-    const textContainers = document.querySelectorAll('.about-text-anim-container');
-
-    textContainers.forEach(container => {
-        const slides = container.querySelectorAll('.about-text-anim-slide');
-        if (slides.length < 2) return; // Don't animate if there's only one option
-
-        let currentSlide = 0;
-
-        // Function to show the next slide
-        const showNextSlide = () => {
-            // Hide the current slide
-            slides[currentSlide].classList.remove('visible');
-
-            // Move to the next slide, looping back to the start
-            currentSlide = (currentSlide + 1) % slides.length;
-
-            // Show the new current slide
-            slides[currentSlide].classList.add('visible');
-        };
-
-        setInterval(showNextSlide, 3000); // Switch text every 3 seconds
-    });
 });

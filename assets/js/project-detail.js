@@ -49,26 +49,26 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('meta[property="og:image"]').setAttribute('content', absoluteImageUrl);
 
 
+        // --- Helper function to safely update element content ---
+        const safeUpdate = (id, property, value) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element[property] = value;
+            }
+        };
 
-
-        document.getElementById('project-title').textContent = project.title;
-        document.getElementById('project-description').textContent = project.description;
+        safeUpdate('project-title', 'textContent', project.title);
+        safeUpdate('project-description', 'textContent', project.description);
 
         const detailsList = document.getElementById('project-details-list');
-        detailsList.innerHTML = ''; // Clear any placeholder content
-        project.details.forEach(detail => {
-            const li = document.createElement('li');
-            li.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${detail}`;
-            detailsList.appendChild(li);
-        });
+        if (detailsList) {
+            detailsList.innerHTML = project.details.map(detail => `<li><i class="fa-solid fa-check-circle"></i> ${detail}</li>`).join('');
+        }
 
         const techList = document.getElementById('project-tech-list');
-        techList.innerHTML = ''; // Clear any placeholder content
-        project.technologies.forEach(tech => {
-            const li = document.createElement('li');
-            li.innerHTML = `<i class="fa-solid fa-code"></i> ${tech}`;
-            techList.appendChild(li);
-        });
+        if (techList) {
+            techList.innerHTML = project.technologies.map(tech => `<li><i class="fa-solid fa-code"></i> ${tech}</li>`).join('');
+        }
 
         // Apply floating effect to the back button container
         const backButtonContainer = document.querySelector('.back-to-projects-container');
@@ -78,9 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Populate the client logo and name
         if (project.client) {
-            document.getElementById('client-logo-image').src = project.client.logoUrl;
-            document.getElementById('client-logo-image').alt = `${project.client.name} Logo`;
-            document.getElementById('client-name').textContent = project.client.name;
+            safeUpdate('client-logo-image', 'src', project.client.logoUrl);
+            safeUpdate('client-logo-image', 'alt', `${project.client.name} Logo`);
+            safeUpdate('client-name', 'textContent', project.client.name);
         }
 
         // Populate floating tech logos
@@ -104,7 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Create a continuous, random floating animation that respects boundaries
                 const tl = gsap.timeline({ repeat: -1, yoyo: true });
-                const navBarHeight = 100; // Estimated height of the sticky nav bar in pixels
+                
+                // Dynamically get header height to make it more robust
+                const headerEl = document.querySelector('.header.sticky');
+                const navBarHeight = headerEl ? headerEl.offsetHeight : 80; // Fallback to 80px
+
+                // Get container bounds once before the animation starts
+                const bounds = floatingTechLogosContainer.getBoundingClientRect();
 
                 tl.to(techLogoDiv, {
                     x: () => `+=${gsap.utils.random(-150, 150)}`,
@@ -112,22 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     rotation: () => `+=${gsap.utils.random(-30, 30)}`,
                     duration: () => gsap.utils.random(10, 20),
                     ease: "sine.inOut",
-                    onUpdate: function() {
-                        const logo = this.targets()[0];
-                        const bounds = floatingTechLogosContainer.getBoundingClientRect();
-                        const logoBounds = logo.getBoundingClientRect();
-
-                        // Check top boundary (relative to the viewport)
-                        if (logoBounds.top < navBarHeight) {
-                            // If it hits the nav bar area, reverse the timeline's vertical motion
-                            const currentY = gsap.getProperty(logo, "y");
-                            gsap.to(logo, { y: currentY + 20, duration: 0.5, ease: "power1.out" }); // Nudge it down
-                            this.timeScale(this.timeScale() * -1); // Reverse direction
-                        }
-
-                        // Check other boundaries (left, right, bottom) relative to its container
-                        if (logoBounds.right > bounds.right || logoBounds.left < bounds.left || logoBounds.bottom > bounds.bottom) {
-                           this.timeScale(this.timeScale() * -1); // Reverse direction
+                    modifiers: {
+                        x: function(x) {
+                            // Constrain x within the container's bounds
+                            const logoWidth = techLogoDiv.offsetWidth;
+                            return gsap.utils.clamp(0, bounds.width - logoWidth, x);
+                        },
+                        y: function(y) {
+                            // Constrain y within the container's bounds, accounting for the nav bar
+                            const logoHeight = techLogoDiv.offsetHeight;
+                            // The top boundary is the navBarHeight minus the container's top offset
+                            const topBound = navBarHeight - bounds.top;
+                            return gsap.utils.clamp(topBound, bounds.height - logoHeight, y);
                         }
                     }
                 });
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const galleryContainer = document.getElementById('project-gallery-images');
         if (project.imageUrls && project.imageUrls.length > 0) {
             galleryContainer.innerHTML = ''; // Clear placeholder
-            project.imageUrls.forEach((url, index) => { 
+            project.imageUrls.forEach((url, index) => {
                 const isVideo = url.endsWith('.mp4');
                 const galleryItemContainer = document.createElement('div');
                 galleryItemContainer.className = 'gallery-item';
@@ -163,7 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 galleryItemContainer.addEventListener('click', () => openLightbox(index));
                 galleryContainer.appendChild(galleryItemContainer);
             });
-            galleryWrapper.style.display = 'block';
+            if (galleryWrapper) {
+                galleryWrapper.style.display = 'block';
+            }
         }
 
         // --- Lightbox Functionality ---
@@ -271,7 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Make the content visible after populating
-        contentWrapper.style.display = 'flex';
+        if (contentWrapper) {
+            contentWrapper.style.display = 'flex';
+        }
 
     } else {
         // If no project is found, display an error message

@@ -325,14 +325,29 @@ nav .logo a img {
     position: relative;
     color: #FFF;
     padding: 0.625rem 1.5rem;
-    align-items: center;
     font-size: 1rem;
     text-align: center;
     display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50px;
-    background: linear-gradient(var(--rotate), var(--Main01), var(--Main02));
     border: none;
     font-weight: 600;
+    overflow: hidden; /* Hide the overflowing pseudo-element */
+    background: var(--bg01); /* Give it a solid background */
+}
+
+.btn_area .btn::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 200%; /* Make it larger to cover the button when rotated */
+    height: 200%;
+    background: conic-gradient(from var(--rotate), var(--Main01), var(--Main02), var(--Main01));
+}
+
+.btn_area .btn:hover::before {
+    animation: spin 2.5s linear infinite;
 }
 
 .btn_area .btn:hover {
@@ -759,12 +774,23 @@ nav .logo a img {
     position: relative;
 }
 
-.gradient-border::before {
+.gradient-border::after { /* Use ::after for the border */
     content: '';
     position: absolute;
     inset: -0.125rem;
     z-index: -1;
     border-radius: inherit;
+    background: var(--bg01); /* Solid background for the element itself */
+}
+
+.gradient-border::before { /* Use ::before for the animated gradient */
+    content: '';
+    position: absolute;
+    inset: -0.125rem;
+    z-index: -2; /* Place it behind the ::after element */
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
     background: conic-gradient(from var(--rotate), var(--Main02), var(--Main01), var(--Main02));
     animation: spin 2s linear infinite;
 }
@@ -1396,13 +1422,29 @@ footer p {
     padding: 1.0625rem 2.1875rem;
     margin-left: 0.625rem;
     border-radius: 3.125rem;
-    font-weight: 500;
     color: #fff;
     font-size: 1rem;
-    background: linear-gradient(var(--rotate), var(--Main01), var(--Main02));
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg01); /* Solid background */
+    border: none;
+}
+
+.newsletter__form .btn::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from var(--rotate), var(--Main01), var(--Main02), var(--Main01));
 }
 
 .newsletter__form .btn:hover {
+    animation: spin 2.5s linear infinite;
+}
+
+.newsletter__form .btn:hover::before {
     animation: spin 2.5s linear infinite;
 }
 
@@ -1434,16 +1476,30 @@ footer .banner_content .btn {
     padding: 1.3125rem 2.5rem;
     align-items: center;
     font-size: 1.125rem;
-    text-align: center;
     display: flex;
+    justify-content: center;
     border-radius: 3.125rem;
-    background: linear-gradient(var(--rotate), var(--Main01), var(--Main02));
     border: none; 
     font-weight: 600;
     margin: 50px 0 0 0;
+    overflow: hidden;
+    background: var(--bg01);
+}
+
+footer .banner_content .btn::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from var(--rotate), var(--Main01), var(--Main02), var(--Main01));
 }
 
 footer .banner_content .btn {
+    animation: spin 2.5s linear infinite;
+}
+
+footer .banner_content .btn::before {
     animation: spin 2.5s linear infinite;
 }
 
@@ -1930,9 +1986,25 @@ footer .fimg2 {
     padding: 0.9375rem 2.5rem;
     font-size: 1.125rem;
     font-weight: 600;
-    border-radius: 3.125rem;
-    background: linear-gradient(var(--rotate), var(--Main01), var(--Main02));
     cursor: pointer;
+    border-radius: 3.125rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg01);
+    border: none;
+}
+
+.contact-form .btn::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from var(--rotate), var(--Main01), var(--Main02), var(--Main01));
+}
+
+.contact-form .btn:hover::before {
+    animation: spin 2.5s linear infinite;
 }
 
 /* 404 Page Styles */
