@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Environment variables
 .env
 
@@ -10,4 +11,18 @@
 
 # Log files
 *.log
+=======
+# Environment variables
+.env
+
+# Node.js dependencies
+/node_modules
+
+# Build output
+/dist
+/.vercel
+
+# Log files
+*.log
+>>>>>>> 7f0372758c5586c425aad2764257a987c4e40b50
 npm-debug.log*
