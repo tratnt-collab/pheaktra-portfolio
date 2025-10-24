@@ -1,0 +1,584 @@
+/*****========== Responsive =============*****/
+
+@media screen and (max-width: 1200px) {
+    .container {
+        max-width: 1140px !important;
+    }
+
+    .services_area {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 60px;
+    }
+
+    .services_card {
+        margin: 0 0;
+    }
+
+    .services_area .services_card {
+        width: 75%;
+    }
+
+    .services_area .services_info {
+        width: 60%;
+    }
+
+    .card_area {
+        gap: 30px;
+    }
+
+    .cardBlg {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .container {
+        max-width: 960px !important;
+    }
+
+    .follow_Area {
+        position: relative;
+        max-width: 330px;
+        gap: 25px;
+        margin: 35px 0px;
+        transform: rotate(0deg) !important;
+        bottom: 0;
+        left: 0;
+    } 
+
+
+    .flw_icon a i {
+        transform: rotate(0deg);
+    }
+
+    .banner_content .Cnt_img {
+        width: auto;
+    }
+
+    .about-image-wrapper {
+        width: auto;
+    }
+
+    .EImg01 {
+        right: 423px;
+        top: 343px;
+    }
+
+    .banner_content .Cnt_info {
+        width: 58%;
+        position: relative;
+        margin-top: 60px;
+    }
+
+    .subnews h2 {
+        font-size: 50px;
+    }
+
+    .Project .banner_content {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .listproj {
+        width: auto;
+    }
+
+    .cardBlg {
+        width: 45%;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 720px !important;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .banner_content .Cnt_info .btn_area .btn {
+        font-size: 16px;
+        padding: 12px 17px;
+        margin: 28px 0px 20px 0px;
+    }
+
+    .mobile_menu {
+        display: block;
+    }
+
+    .OC_btn {
+        display: block;
+    }
+
+    .btn_area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .banner_content .Cnt_img .banner_img {
+
+        width: 300px;
+        height: 300px;
+    }
+
+    #home .Cnt_img {
+        /* Adjust height for the Plexus canvas container on smaller screens */
+        height: 200px;
+    }
+
+    /* Adjust height for the Plexus canvas container on smaller screens */
+    #home .Cnt_img {
+        height: 350px;
+    }
+
+    /* Center the about image and make it smaller on mobile */
+    .about .banner_img {
+        margin: 0 auto; /* Center the image container */
+    }
+
+    .about .about-image-wrapper {
+        margin: 0 auto; /* Center the image container */
+        transform: scale(0.7); /* Make the image and its layers smaller */
+    }
+
+    /* Adjust floating icons for smaller screens */
+    .about-image-wrapper .banner_img span[class^="Abimg"] {
+        width: 40px;
+        height: 40px;
+    }
+
+    .Abimg01 {
+        top: -40px;
+        left: 5%;
+    }
+    .Abimg02 {
+        top: 15%;
+        right: -40px;
+    }
+    .Abimg03 {
+        bottom: -30px;
+        right: 10%;
+    }
+    .Abimg04 {
+        bottom: 25%;
+        left: -40px;
+    }
+    .EImg01 {
+        right: 387px;
+        top: 361px;
+    }
+
+    .banner_content .Cnt_info {
+        width: 100%;
+        position: relative;
+        margin-top: 100px;
+    }
+
+    /* Reposition decorative icons for mobile layout */
+    .Ecnt01 {
+        top: -60px; /* Move it up */
+        left: 0; /* Position it to the left */
+        right: auto; /* Unset any inherited right value */
+        z-index: 10; /* Bring it to the front to make it clickable */
+    }
+
+    /* Reposition decorative icons for mobile layout */
+    .Ecnt02 {
+        top: -60px; /* Move it up */
+        left: auto; /* Unset the desktop 'left' value */
+        right: 0; /* Position it to the right */
+    }
+
+    .headTitle,
+    .banner_content .Cnt_info .title_inner h2 {
+        font-size: 45px;
+    }
+
+    .AboutInfo h2,
+    .subnews h2,
+    footer h2,
+    .services_info h2,
+    .Project .banner_content .listproj h2,
+    .banner_content .Cnt_info .title_inner .title_animation p { 
+        font-size: 40px; 
+    } 
+
+    /* Adjust typing animation font size for tablets */
+    #headline-typing-effect {
+        font-size: 20px; /* 50% of the 40px h2 */
+    }
+
+    .banner_content .Cnt_info .title_inner .title_animation {
+        width: 100%;
+        height: 70px;
+    }
+
+    .AboutInfo p,
+    .banner_content .Cnt_info .description p {
+        font-size: 16px;
+    }
+
+    .aboutimg,
+    .AboutCnt {
+        width: 100%;
+        margin: auto !important;
+    }
+
+    .about .banner_content {
+        /* Center align flex items (image and text content) */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Center align the content in the About section on mobile */
+    .about .AboutCnt {
+        text-align: left;
+    }
+
+    /* Ensure the subtitle is also centered correctly */
+    .about .AboutInfo .subT {
+        justify-content: flex-start; /* Align subtitle to the left */
+        display: flex;
+    }
+
+    .newsletter__form {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .Project .banner_content .listproj p {
+        font-size: 16px;
+    }
+
+
+    .services_area .services_card,
+    .services_area .services_info {
+        width: 100%;
+    }
+
+    .services_card {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .services_info p {
+        font-size: 16px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .cardBlg {
+        width: 70%;
+    }
+
+    .cardBlg h4 {
+        font-size: 25px;
+    }
+
+    .cardBlg p {
+        font-size: 16px;
+    }
+
+    .cardBlg .checkbox span {
+
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .cardBlg .checkbox span i {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+
+    .services .banner_content .serimg02 {
+        position: absolute;
+        scale: 0.3;
+        bottom: -90px;
+        right: -34px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .container {
+        max-width: 540px !important;
+    }
+
+    .EImg01 {
+        right: 313px;
+        top: 319px;
+    }
+
+    .banner_content .Cnt_img .banner_img {
+        width: 250px;
+        height: 250px;
+    }
+
+    #home .Cnt_img {
+        /* Adjust height for the Plexus canvas container on very small screens */
+        height: 250px;
+    }
+
+    .subnews {
+        position: relative;
+        padding: 30px;
+    }
+
+    .about,
+    .subr,
+    .services,
+    .Project,
+    footer {
+        padding: 120px 20px 120px 20px;
+    }
+
+    .newsletter__form .btn {
+        padding: 12px 34px;
+        margin: 0px;
+    }
+
+    footer .fimg {
+        scale: 0.3;
+        top: -43px;
+    }
+
+    footer .fimg2 {
+        position: absolute;
+        scale: 0.4;
+        right: -19px;
+        bottom: -56px;
+    }
+
+    .footersocal a {
+        font-size: 20px;
+    }
+
+    .cardBlg {
+        width: 60%;
+    }
+
+    .cardBlg h4 {
+        font-size: 24px;
+    }
+
+    .cardBlg p {
+        font-size: 15px;
+    }
+
+    .cardBlg .checkbox span {
+
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .cardBlg .checkbox span i {
+        margin-right: 8px;
+        font-size: 17px;
+    }
+
+}
+
+@media screen and (max-width: 460px) {
+    .banner_content .Cnt_img .banner_img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .banner_content .Cnt_img .banner_img img {
+        top: -22px;
+    }
+
+    .EImg01 {
+        right: 15rem;
+        top: 249px;
+    }
+
+    .banner_content .Cnt_info .title_inner h2 {
+        font-size: 27px;
+    }
+
+    .AboutInfo h2,
+    .subnews h2,
+    footer h2,
+    .services_info h2,
+    .Project .banner_content .listproj h2,
+    .banner_content .Cnt_info .title_inner .title_animation p { 
+        font-size: 22px; 
+    } 
+
+    /* Adjust typing animation font size for phones */
+    #headline-typing-effect {
+        font-size: 11px; /* 50% of the 22px h2 */
+    }
+
+    .banner_content .Cnt_info .title_inner .title_animation {
+        height: 40px;
+    }
+
+    .AboutInfo p,
+    footer p,
+    .banner_content .Cnt_info .description p {
+        font-size: 14px;
+    }
+
+    footer .banner_content .btn {
+        padding: 16px 35px;
+        font-size: 16px;
+        margin: 40px 0 0 0;
+    }
+
+    .AboutInfo button,
+    .btn_area .btn {
+        font-size: 15px;
+    }
+
+    .follow_Area span {
+        color: #fff;
+        position: relative;
+        padding-right: 57px;
+        font-size: 15px;
+    }
+
+    .follow_Area {
+        gap: 10px;
+        margin: 20px 0px;
+    }
+
+    .flw_icon {
+        gap: 12px;
+    }
+
+    .year p,
+    .copyright .copyinfo a {
+        font-size: 14px;
+    }
+
+    .cardBlg {
+        width: 100%;
+    }
+
+  /* Project Detail Page Responsive Adjustments for medium screens */
+    .project-detail-content {
+        gap: 60px; /* Reduce gap for medium screens */
+    }
+    .project-client-logo {
+        min-width: 180px; /* Slightly smaller min-width */
+    }
+    .project-detail-info h3 {
+        font-size: 42px;
+    }
+    .project-detail-info h4 {
+        font-size: 22px;
+    }
+    .project-detail-info p,
+    .project-detail-info ul li {
+        font-size: 18px;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Existing rules for 768px */
+
+    /* Project Detail Page Responsive Adjustments */
+    .project-detail-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+    .project-client-logo {
+        width: 100%;
+        max-width: 300px; /* Constrain width even when stacked */
+        min-width: unset; /* Remove desktop min-width constraint */
+        padding: 25px;
+    }
+    .project-detail-info {
+        width: 100%;
+        text-align: center; /* Center text when stacked */
+    }
+    .project-detail-info h3 {
+        font-size: 36px;
+    }
+    .project-detail-info h4 {
+        font-size: 20px;
+    }
+    .project-detail-info p {
+        font-size: 16px;
+    }
+    .project-detail-info ul {
+        padding-left: 0; /* Remove default padding for ul */
+    }
+    .project-detail-info ul li {
+        font-size: 16px;
+        display: flex; /* Make li a flex container */
+        justify-content: center; /* Center list items */
+        text-align: left; /* Keep text left-aligned within the centered li */
+        margin-left: auto; /* Auto margins to center the li itself */
+        margin-right: auto;
+        max-width: fit-content; /* Allow li to shrink to content width */
+    }
+    .project-gallery h3 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    /* Responsive adjustments for mobile devices */
+    /* For the home section, reverse the order to show the image/canvas first */
+    #home .banner_content {
+        flex-direction: column-reverse;
+        gap: 40px;
+    }
+
+    /* For all other sections, stack them in their default source order */
+    .banner_content:not(#home .banner_content) {
+        flex-direction: column;
+        gap: 40px; /* Add some space between stacked items */
+    }
+
+    /* For the about section, ensure default column stacking (image first) */
+    .about .banner_content {
+        flex-direction: column;
+        align-items: center; /* Center the items horizontally */
+    }
+
+    /* Reduce the large top margin on the about image */
+    .aboutimg {
+        margin-top: 0 !important;
+    }
+
+    /* Reduce the gap between sections on mobile */
+    main > section:not(:last-of-type) {
+        margin-bottom: 60px;
+    }
+
+    /* Hide some decorative elements on mobile to reduce clutter */
+    .serimg02, .simg1, .simg2, .fimg, .fimg2 {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 461px) {
+    /* Reset margins on service cards to prevent overlap in single-column layout */
+    .card:nth-child(2),
+    .card:nth-child(odd) {
+        margin: 0;
+    }
+
+    /* Adjust contact section to a single-column, centered layout */
+    .subr .banner_content {
+        grid-template-columns: 1fr;
+    }
+}
